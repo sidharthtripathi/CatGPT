@@ -23,7 +23,7 @@ function ask(){
 
 // creating cat response
 
-let url = 'http://localhost:3000/resp';
+let url = 'https://catgpt.onrender.com/resp';
 
 async function create(){
 try{
