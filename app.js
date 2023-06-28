@@ -12,7 +12,13 @@ function ask(){
   //appending response into chatbox
   document.getElementById("msgcontainer").append(askmsg);
   // printing meow response
-  create()
+  try{
+    create()
+  }
+  
+  catch(err){
+    console.log('err occured')
+  }
 }
 
 // creating cat response
@@ -20,17 +26,31 @@ function ask(){
 let url = 'http://localhost:3000/resp';
 
 async function create(){
+try{
   let resp = await fetch(url,{
     method: 'GET',
 })
+if (!resp.ok) {
+  throw new Error('Network response was not OK');
+}
   let msg = await resp.json();
   let data = msg.msg;
   let msgbox = document.createElement('div');
   msgbox.className = "msg_cat";
   document.getElementById("msgcontainer").append(msgbox);
   msgbox.innerText = data;
+}
+catch(err){
+  console.log('Kitty drained out !')
+  let msgbox = document.createElement('div');
+  msgbox.className = "msg_cat";
+  document.getElementById("msgcontainer").append(msgbox);
+  msgbox.innerText = '😴 Our supreme cat is resting as of now, Come back later 👋';
+}
+
 
 }
+
 create()
 
 
