@@ -1,21 +1,4 @@
-function create(){
-  let msg = "😼 ";
-  let msgbox = document.createElement('div');
-  msgbox.className = "msg_cat";
-  document.getElementById("msgcontainer").append(msgbox);
-  let timerid = setInterval(add,100);
-  let count = 0;
-  let max_count = Math.ceil(Math.random()*10) + 5;
-  function add(){
-    if(count == max_count)
-    clearInterval(timerid);
-    msg = msg + "meow ";
-    msgbox.innerText = msg;
-    count++;
-  }
-}
-create();
-
+// creating user questions
 function ask(){
   //creating user response div
   let askmsg = document.createElement('div');
@@ -29,10 +12,31 @@ function ask(){
   //appending response into chatbox
   document.getElementById("msgcontainer").append(askmsg);
   // printing meow response
-  setTimeout(create,500);
+  create()
 }
 
-// for enter key
+// creating cat response
+
+let url = 'http://localhost:3000/resp';
+
+async function create(){
+  let resp = await fetch(url,{
+    method: 'GET',
+})
+  let msg = await resp.json();
+  let data = msg.msg;
+  let msgbox = document.createElement('div');
+  msgbox.className = "msg_cat";
+  document.getElementById("msgcontainer").append(msgbox);
+  msgbox.innerText = data;
+
+}
+create()
+
+
+
+
+// for enter key 
 let input = document.getElementById("ques");
 
 input.addEventListener('keyup',(e) =>{
